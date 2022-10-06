@@ -1,41 +1,44 @@
+package assignment5;
 
-public class SwitchClass {
+//Program to make simple calculator operations using Switch case
+
+public class CalculatorUsingSwitch {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
 		int number1 = 2;
 		int number2 = 2;
 		int result;
 
-		String operator = "+";
+		char operator = '+';
 
 		switch (operator) {
 
-		case "+": {
+		case '+': {
 			result = number1 + number2;
 			System.out.println(number1 + " + " + number2 + " = " + result);
 			break;
 		}
-		case "-": {
+		case '-': {
 			result = number1 - number2;
 			System.out.println(number1 + " - " + number2 + " = " + result);
 			break;
 		}
-		case "*": {
+		case '*': {
 			result = number1 * number2;
 			System.out.println(number1 + " * " + number2 + " = " + result);
 			break;
 		}
-		case "/": {
+		case '/': {
 			result = number1 / number2;
 			System.out.println(number1 + " / " + number2 + " = " + result);
 			break;
 		}
 		default: {
 			System.out.println("Invalid Operator");
+			break;
 		}
 		}
+
 	}
 
 }
