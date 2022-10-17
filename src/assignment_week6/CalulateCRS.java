@@ -22,7 +22,7 @@ public class CalulateCRS {
 
 	// Method to calculate score of Education with return type Integer
 	int scoreOfEducationLevel(String educationLevel) {
-		if (educationLevel != " ") {
+		if (educationLevel.equalsIgnoreCase(educationLevel)) {
 			switch (educationLevel) {
 			case "PHD":
 				scoreOfEducationLevel += scorePHD;
