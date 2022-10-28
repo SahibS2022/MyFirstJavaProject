@@ -10,46 +10,6 @@ public class UserDetails {
 	private String userPhoneNumber;
 	Scanner sc = new Scanner(System.in);
 
-	public String getUserEmail() {
-		return userEmail;
-	}
-
-	public void setUserEmail(String userEmail) {
-		this.userEmail = userEmail;
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public String getUserPassword() {
-		return userPassword;
-	}
-
-	public void setUserPassword(String userPassword) {
-		this.userPassword = userPassword;
-	}
-
-	public String getUserFullName() {
-		return userFullName;
-	}
-
-	public void setUserFullName(String userFullName) {
-		this.userFullName = userFullName;
-	}
-
-	public String getUserPhoneNumber() {
-		return userPhoneNumber;
-	}
-
-	public void setUserPhoneNumber(String userPhoneNumber) {
-		this.userPhoneNumber = userPhoneNumber;
-	}
-
 	// Method to Register a User
 	public void register() {
 
@@ -75,23 +35,23 @@ public class UserDetails {
 				break;
 			}
 			userEmail = testString;
-			setUserEmail(userEmail);
+			this.userEmail = userEmail;
 		} while (!isValidEmail);
 
 		// Input for UserName
 		System.out.println("Please create Username");
 		String userName = sc.nextLine();
-		setUserName(userName);
+		this.userName = userName;
 
 		// Input for UserPassword
 		System.out.println("Please create Password ");
 		String userPassword = sc.nextLine();
-		setUserPassword(userPassword);
+		this.userPassword = userPassword;
 
 		// Input for User Full Name
 		System.out.println("Please enter your full name");
 		String userFullName = sc.nextLine();
-		setUserFullName(userFullName);
+		this.userFullName = userFullName;
 
 		// Input for User Phone Number
 		String userPhoneNumber = "";
@@ -109,7 +69,7 @@ public class UserDetails {
 				System.out.println("Invalid Phone Number!\nPhone Number must be 10 digits only!");
 				break;
 			}
-			setUserPhoneNumber(userPhoneNumber);
+			this.userPhoneNumber = userPhoneNumber;
 		} while (userPhoneNumber.length() != 10);
 		System.out.println("Thank you for your Registration ! ");
 	}
@@ -175,7 +135,7 @@ public class UserDetails {
 		} while (!userPassword.equalsIgnoreCase(currentPass));
 		System.out.println("Please enter your new Password");
 		String newPass = sc.next();
-		setUserPassword(newPass);
+		this.userPassword = newPass;
 		System.out.println("You password has been changed successfully!\nThank You for your service!");
 	}
 
@@ -199,7 +159,7 @@ public class UserDetails {
 		} while (!userName.equalsIgnoreCase(currentUserName));
 		System.out.println("Please enter your new Username");
 		String newUserName = sc.next();
-		setUserName(newUserName);
+		this.userName = newUserName;
 		System.out.println("You username has been changed successfully!\nThank You for your service!");
 	}
 
@@ -228,7 +188,7 @@ public class UserDetails {
 			String testString = newUserEmail;
 			isValidEmail = testString.matches(email_regex);
 			if (isValidEmail) {
-				setUserEmail(newUserEmail);
+				this.userEmail = newUserEmail;
 				System.out.println("You email has been changed successfully!\nThank You for your service!");
 			}
 		} while (!isValidEmail);
@@ -254,7 +214,7 @@ public class UserDetails {
 		} while (!userPhoneNumber.equalsIgnoreCase(currentUserPhoneNo));
 		System.out.println("Please enter your new Phone Number");
 		String newUserPhoneNo = sc.next();
-		setUserPhoneNumber(newUserPhoneNo);
+		this.userPhoneNumber = newUserPhoneNo;
 		System.out.println("You Phone Number has been changed successfully!\nThank You for your service!");
 	}
 
