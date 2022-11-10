@@ -31,7 +31,7 @@ public class WordGame {
 	private void getRandomWord(BufferedReader nameList) {
 		String name = "";
 		String playAgain = "";
-		ArrayList<String> nameArrayList = new ArrayList<String>();// Create an ArrayList object named as nameArrayList																
+		ArrayList<String> nameArrayList = new ArrayList<String>();// Create an ArrayList object named as nameArrayList
 		try {
 			name = nameList.readLine();
 		} catch (IOException e1) {
