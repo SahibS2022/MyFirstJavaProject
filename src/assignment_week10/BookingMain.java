@@ -11,8 +11,7 @@ public class BookingMain {
 		System.out.println("------Welcome To Booking Hotel/Cruise------\n");
 		System.out.println("<<<<<<Please SignUp first for Booking>>>>>>\n");
 		UserDetails userDetails = new UserDetails();
-		userDetails.register();// invoking method for User Registration
-		userDetails.login();// invoking method for User Login
+		userDetails.register(sc);// invoking method for User Registration
 		int count = 0;
 		boolean isValidInput = false;
 		do {
@@ -34,59 +33,20 @@ public class BookingMain {
 			} while (!isValidInput);
 			if (selectedService.equalsIgnoreCase("Hotel")) {
 				BookingHotel bookingHotel = new BookingHotel();
-				SuiteDeluxDetails suiteDeluxDetails = new SuiteDeluxDetails();
-				SuiteFamilyDetails suiteFamilyDetails = new SuiteFamilyDetails();
-				boolean isValid = false;
-				do {
-					String selectedSuite = bookingHotel.getSelectedSuite();
-					if (selectedSuite.equalsIgnoreCase("Delux Suite")) {
-						int maxCapacity = suiteDeluxDetails.getCapacityMax();
-						int noOfAdults = suiteDeluxDetails.getNoOfAdults();
-						int noOfChildrens = suiteDeluxDetails.getNoOfChildrens();
-						isValid = suiteDeluxDetails.isSelectedSuiteValid(noOfAdults, noOfChildrens, maxCapacity);
-						if (isValid) {
-							System.out.println("Enter the number of days of stay:\n");
-							int stayingDays = sc.nextInt();
-							String selectedSuiteName = suiteDeluxDetails.getSuiteName();
-							double selectedSuitePrice = suiteDeluxDetails.getSuitePrice();
-							double suitPriceWithDays = selectedSuitePrice * stayingDays;
-							suiteDeluxDetails.isMealAdded();
-							double priceAddMealAdults = suiteDeluxDetails.getPriceAddMealAdults(noOfAdults);
-							double priceAddMealChilds = suiteDeluxDetails.getPriceAddMealChilds(noOfChildrens);
-							double totalPrice = suiteDeluxDetails.getTotalPrice(suitPriceWithDays, priceAddMealAdults,
-									priceAddMealChilds);
-							double hstAmount = suiteDeluxDetails.getPriceWithHst(totalPrice);
-							double finalPrice = suiteDeluxDetails.getFinalPrice(totalPrice, hstAmount);
-							suiteDeluxDetails.calculateFinalPrice(selectedSuiteName, stayingDays, suitPriceWithDays,
-									noOfAdults, noOfChildrens, priceAddMealAdults, priceAddMealChilds, totalPrice,
-									hstAmount, finalPrice);
-						}
-					} else {
-						int maxCapacity = suiteFamilyDetails.getCapacityMax();
-						int noOfAdults = suiteFamilyDetails.getNoOfAdults();
-						int noOfChildrens = suiteFamilyDetails.getNoOfChildrens();
-						isValid = suiteFamilyDetails.isSelectedSuiteValid(noOfAdults, noOfChildrens, maxCapacity);
-						if (isValid) {
-							System.out.println("Enter the number of days of stay:\n");
-							int stayingDays = sc.nextInt();
-							String selectedSuiteName = suiteFamilyDetails.getSuiteName();
-							double selectedSuitePrice = suiteFamilyDetails.getSuitePrice();
-							double suitPriceWithDays = selectedSuitePrice * stayingDays;
-							suiteFamilyDetails.isMealAdded();
-							double priceAddMealAdults = suiteFamilyDetails.getPriceAddMealAdults(noOfAdults);
-							double priceAddMealChilds = suiteFamilyDetails.getPriceAddMealChilds(noOfChildrens);
-							double totalPrice = suiteFamilyDetails.getTotalPrice(suitPriceWithDays, priceAddMealAdults,
-									priceAddMealChilds);
-							double hstAmount = suiteFamilyDetails.getPriceWithHst(totalPrice);
-							double finalPrice = suiteFamilyDetails.getFinalPrice(totalPrice, hstAmount);
-							suiteFamilyDetails.calculateFinalPrice(selectedSuiteName, stayingDays, suitPriceWithDays,
-									noOfAdults, noOfChildrens, priceAddMealAdults, priceAddMealChilds, totalPrice,
-									hstAmount, finalPrice);
-						}
+				SuiteDeluxDetails suiteDeluxDetails = new SuiteDeluxDetails("Delux", 2, 180.0);
+				SuiteFamilyDetails suiteFamilyDetails = new SuiteFamilyDetails("Family", 4, 230.0);
+				BookingHotel[] allSuites = { suiteDeluxDetails, suiteFamilyDetails };
+				String selectedSuite = bookingHotel.getSelectedSuite(sc);
+				for (int i = 0; i < allSuites.length; i++) {
+					if (selectedSuite.equalsIgnoreCase(allSuites[i].getSuiteName())) {
+						int noOfAdults = allSuites[i].getNoOfAdults();
+						int noOfChildrens = allSuites[i].getNoOfChildrens();
+						allSuites[i].isSelectedSuiteValid(noOfAdults, noOfChildrens);
+						allSuites[i].calculateFinalPrice(noOfAdults, noOfChildrens);
+						break;
 					}
-				} while (!isValid);
+				}
 			} else {
-				BookingCruise bookingCruise = new BookingCruise();
 				BookingCruise scenicCruiseDetails = new BookingCruise("Scenic Cruise", 43.99, 12.99, 50.0, 3, "Spa");
 				BookingCruise sunsetCruiseDetails = new BookingCruise("Sunset Cruise", 52.99, 15.99, 45.0, 1,
 						"Candle Light Dinner");
@@ -94,29 +54,27 @@ public class BookingMain {
 						"Adventure");
 				BookingCruise mysteryCruiseDetails = new BookingCruise("Mystery Cruise", 45.99, 12.99, 20.0, 2,
 						"Casino");
-				BookingCruise[] allbookingCruise = { scenicCruiseDetails, sunsetCruiseDetails, discoveryCruiseDetails,
+				BookingCruise[] bookingCruise = { scenicCruiseDetails, sunsetCruiseDetails, discoveryCruiseDetails,
 						mysteryCruiseDetails };
 				String reEnter;
+				int index = 0;
 				String selectedCruiseName = "";
-				double priceAdults = 0.0;
-				double priceChilds = 0.0;
 				double eventPrice = 0.0;
 				String eventName = "";
 				do {
-					String selectedCruise = bookingCruise.getSelectedCruise();
-					for (int i = 0; i < allbookingCruise.length; i++) {
-						if ((selectedCruise).equalsIgnoreCase(allbookingCruise[i].getSelectedCruiseName())) {
-							selectedCruiseName = allbookingCruise[i].getSelectedCruiseName();
-							priceAdults = allbookingCruise[i].getPriceAdult();
-							priceChilds = allbookingCruise[i].getPriceChild();
-							eventName = allbookingCruise[i].getEventName();
-							eventPrice = allbookingCruise[i].getPriceEvent();
+					for (int i = 0; i < bookingCruise.length; i++) {
+						selectedCruiseName = bookingCruise[i].getSelectedCruise(sc);
+						if ((selectedCruiseName).equalsIgnoreCase(bookingCruise[i].getSelectedCruiseName())) {
+							selectedCruiseName = bookingCruise[i].getSelectedCruiseName();
+							index = i;
+							eventName = bookingCruise[i].getEventName();
+							eventPrice = bookingCruise[i].getPriceEvent();
 							System.out.println("The cruise that you have selected is "
-									+ allbookingCruise[i].getSelectedCruiseName() + " which is a "
-									+ allbookingCruise[i].getNoOfdays() + " day cruise\r\n"
-									+ "Price for Adults	(greater than 12)	: " + allbookingCruise[i].getPriceAdult()
+									+ bookingCruise[i].getSelectedCruiseName() + " which is a "
+									+ bookingCruise[i].getNoOfdays() + " day cruise\r\n"
+									+ "Price for Adults	(greater than 12)	: " + bookingCruise[i].getPriceAdult()
 									+ " per day\r\n" + "Price for kids above 5			        : "
-									+ allbookingCruise[i].getPriceChild() + " per day\r\n" + "");
+									+ bookingCruise[i].getPriceChild() + " per day\r\n" + "");
 							break;
 						}
 					}
@@ -151,18 +109,11 @@ public class BookingMain {
 						+ "\nDo you want to add Pre-Booking for $" + eventPrice
 						+ "\nPlease press Y to Add or press any key ");
 				String eventAdded = sc.next();
-				double priceEventAdded = bookingCruise.getPriceForAddedEvent(numAdults, ageAboveFive, eventPrice);
-				bookingCruise.setbuffetPrice(buffetMeal);
-				double priceForAdults = bookingCruise.priceForAdults(numAdults, priceAdults);
-				double priceforChildren = bookingCruise.priceforChildren(ageAboveFive, priceChilds);
-				double buffetTotalPriceAdult = bookingCruise.buffetTotalPriceAdult(numAdults);
-				double buffetTotalPriceChild = bookingCruise.buffetTotalPriceChild(ageAboveFive);
-				double totalPrice = bookingCruise.totalPrice(priceForAdults, priceforChildren, buffetTotalPriceAdult,
-						buffetTotalPriceChild, priceEventAdded);
-				double priceWithHst = bookingCruise.priceWithHst(totalPrice);
-				bookingCruise.finalPrice(selectedCruiseName, priceForAdults, priceforChildren, buffetTotalPriceAdult,
-						buffetTotalPriceChild, totalPrice, priceWithHst, numAdults, ageAboveFive, eventName,
-						priceEventAdded);
+				bookingCruise[index].setbuffetPrice(buffetMeal);
+				double priceEventAdded = bookingCruise[index].getPriceForAddedEvent(numAdults, ageAboveFive,
+						eventPrice);
+				bookingCruise[index].totalPriceCalculations(selectedCruiseName, priceEventAdded, numAdults,
+						ageAboveFive);
 			}
 			System.out.println("\nDo you want to book another Hotel or Cruise\nPlease press Y to continue.\n");
 			anotherBooking = sc.next();
@@ -171,7 +122,5 @@ public class BookingMain {
 				break;
 			}
 		} while (anotherBooking.equalsIgnoreCase("Y"));
-
 	}
-
 }

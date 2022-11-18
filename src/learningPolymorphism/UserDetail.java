@@ -1,12 +1,13 @@
-package assignment_week10;
+package learningPolymorphism;
 
 import java.util.Scanner;
 
-public class UserDetails implements ProvincialRegulations,FederalRegulations{
+public class UserDetail {
 	private String userEmail, userName, userPassword, userFullName, userPhoneNumber;
 
 	public void register(Scanner sc) {
-
+		System.out.println("------Welcome To Booking Hotel/Cruise------\n");
+		System.out.println("<<<<<<Please SignUp first for Booking>>>>>>\n");
 		boolean isValidEmail = false;
 		String userEmail = "";
 		int count = 0;
@@ -97,15 +98,29 @@ public class UserDetails implements ProvincialRegulations,FederalRegulations{
 		System.out.println("You have Login successfully !");
 	}
 
-	@Override
-	public boolean validateUserId() {
-		// TODO Auto-generated method stub
-		return false;
+	public void finalCalculations(Scanner sc) {
 	}
 
-	@Override
-	public void verifyAge() {
-		// TODO Auto-generated method stub
-		
+	public String getSelectedService(Scanner sc) {
+		boolean isValidInput = false;
+		int count = 0;
+		String selectedService;
+		do {
+			System.out.println("Please enter the service you want to book Hotel/Cruise:\n");
+			selectedService = sc.next();
+			isValidInput = true;
+			while (!selectedService.equalsIgnoreCase("Hotel") && !selectedService.equalsIgnoreCase("Cruise")
+					&& !selectedService.equalsIgnoreCase("")) {
+				count++;
+				isValidInput = false;
+				System.out.println("Invalid Selection try again below");
+				break;
+			}
+			if (count > 2) {
+				System.out.println("Please Start over,you have reached the input limit");
+				System.exit(0);
+			}
+		} while (!isValidInput);
+		return selectedService;
 	}
 }

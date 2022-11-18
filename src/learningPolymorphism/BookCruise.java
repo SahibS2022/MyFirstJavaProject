@@ -1,15 +1,15 @@
-package assignment_week10;
+package learningPolymorphism;
 
 import java.text.DecimalFormat;
 import java.util.Scanner;
 
-public class BookingCruise extends UserDetails {
+public class BookCruise extends UserDetail{
 	private String cruiseName, eventName;
 	private double priceAdult, priceChild, priceEvent, buffetForAdults, buffetForChildren;
 	private int noOfDays;
 	DecimalFormat df = new DecimalFormat("0.00");
-
-	public BookingCruise(String cruiseName, double priceAdult, double priceChild, double priceEvent, int noOfDays,
+	
+	public BookCruise(String cruiseName, double priceAdult, double priceChild, double priceEvent, int noOfDays,
 			String eventName) {
 		this.cruiseName = cruiseName;
 		this.priceAdult = priceAdult;
@@ -19,7 +19,7 @@ public class BookingCruise extends UserDetails {
 		this.eventName = eventName;
 	}
 
-	public BookingCruise() {
+	public BookCruise() {
 	}
 
 	protected String getSelectedCruiseName() {

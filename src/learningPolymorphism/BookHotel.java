@@ -1,31 +1,28 @@
-package assignment_week10;
+package learningPolymorphism;
 
 import java.util.Scanner;
 
-public class BookingHotel extends UserDetails {
-	private String suiteName;
-	private double suitePrice, priceAddMealChilds, priceAddMealAdults, addMealPricePerAdult, addMealPricePerChild;
-	private int capacityMax, stayingDays, count;
+public class BookHotel extends UserDetail {
+	private double suitePrice = 180, priceAddMealChilds, priceAddMealAdults, addMealPricePerAdult = 25.0, addMealPricePerChild = 5.0;
+	private int capacityMax = 2, stayingDays, count, noOfAdults,noOfChildrens;
 	private double hst = 18.0;
+	private String selectedSuite;
 	Scanner sc = new Scanner(System.in);
 
-	public BookingHotel(String suiteName, int capacityMax, double suitePrice) {
-		this.suiteName = suiteName;
-		this.suitePrice = suitePrice;
-		this.capacityMax = capacityMax;
-	}
-
-	public BookingHotel() {
-	}
-
-	protected String getSuiteName() {
-		return suiteName;
+	protected String getselectedSuiteName() {
+		return selectedSuite;
 	}
 
 	protected int getNoOfAdults() {
 		System.out.println("Enter the number of Adults");
 		int noOfAdults = sc.nextInt();
 		return noOfAdults;
+	}
+	protected void exceedingMaxCount(int count) {
+		if (count > 2) {
+			System.out.println("Please Start over,you have reached the input limit");
+			System.exit(0);
+		}
 	}
 
 	protected int getNoOfChildrens() {
@@ -34,7 +31,8 @@ public class BookingHotel extends UserDetails {
 		return noOfChildrens;
 	}
 
-	protected String getSelectedSuite(Scanner sc) {
+	@Override
+	public void finalCalculations(Scanner sc) {
 		String selectedSuite;
 		int count = 0;
 		boolean isValidInput = false;
@@ -49,21 +47,18 @@ public class BookingHotel extends UserDetails {
 				System.out.println("Invalid Selection try again below");
 				break;
 			}
-			if (count > 2) {
-				System.out.println("Please Start over,you have reached the input limit");
-				System.exit(0);
-			}
+			exceedingMaxCount(count);
 			isValidInput = true;
 		} while (!isValidInput);
-		return selectedSuite;
+		this.selectedSuite = selectedSuite;
+		isSelectedSuiteValid();
 	}
 
-	protected void isSelectedSuiteValid(int noOfAdults, int noOfChildrens) {
+	protected void isSelectedSuiteValid() {
+		this.noOfAdults = getNoOfAdults();
+		 this.noOfChildrens = getNoOfChildrens();
 		boolean isValid = true;
-		if (count >= 2) {
-			System.out.println("Please Start over,you have reached the input limit");
-			System.exit(0);
-		}
+		exceedingMaxCount(count);
 		while (noOfAdults > this.capacityMax || noOfChildrens > this.capacityMax) {
 			count++;
 			System.out.println(
@@ -86,16 +81,18 @@ public class BookingHotel extends UserDetails {
 			this.addMealPricePerAdult = 25.0;
 			this.addMealPricePerChild = 5.0;
 		}
+		calculateFinalPrice();
+		
 	}
 
-	protected void calculateFinalPrice(int noOfAdults, int noOfChildrens) {
+	protected void calculateFinalPrice() {
 		double priceAddMealAdults = addMealPricePerAdult * noOfAdults;
 		double priceAddMealChilds = addMealPricePerChild * noOfChildrens;
 		double suitePriceWithDays = suitePrice * stayingDays;
 		double totalPrice = suitePriceWithDays + this.priceAddMealAdults + this.priceAddMealChilds;
 		double hstAmount = (totalPrice * hst) / 100;
 		double finalPrice = totalPrice + hstAmount;
-		System.out.println("The total amount you will be charged is\n" + suiteName.toUpperCase() + " Suite" + "		@ "
+		System.out.println("The total amount you will be charged is\n" + selectedSuite.toUpperCase() + " Suite" + "		@ "
 				+ stayingDays + " nights 	        :	$" + suitePriceWithDays + "\n"
 				+ "Lunch Pre-Booked Special Rate Adults	@ " + noOfAdults + "	: 	$" + priceAddMealAdults + "\n"
 				+ "Lunch Pre-Booked Special Rate Children @ " + noOfChildrens + "	: 	$" + priceAddMealChilds + "\n"
@@ -103,5 +100,4 @@ public class BookingHotel extends UserDetails {
 				+ hstAmount + "\n" + "Final Price					:	$" + finalPrice + "\n"
 				+ "\n !!!!!!Thank You for your Service!!!!!!");
 	}
-
 }
